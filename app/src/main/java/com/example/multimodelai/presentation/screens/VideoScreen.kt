@@ -3,6 +3,7 @@ package com.example.multimodelai.presentation.screens
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,25 +49,26 @@ fun VideoScreen(
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
+                containerColor = androidx.compose.ui.graphics.Color.White
             ),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column(
                 modifier = Modifier.padding(20.dp)
             ) {
                 Text(
-                    text = "🎬 Video Analysis",
+                    text = "🎥 Video Analysis",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "*Upload a video to analyze its content, get summaries, or ask specific questions*",
+                    text = "Upload a video to analyze its content or get a summary with timestamps",
                     fontSize = 16.sp,
                     fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )
             }
         }
@@ -131,12 +133,12 @@ fun VideoScreen(
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
                                 Text(
-                                    text = "**Video File Selected**",
+                                    text = "Video File Selected",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 16.sp
                                 )
                                 Text(
-                                    text = "*Ready for analysis*",
+                                    text = "Ready for analysis",
                                     fontSize = 14.sp,
                                     fontStyle = FontStyle.Italic,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
@@ -159,9 +161,9 @@ fun VideoScreen(
                     modifier = Modifier.padding(20.dp)
                 ) {
                     Text(
-                        text = "**Analysis Options:**",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
+                        text = "Analysis Options:",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -178,9 +180,9 @@ fun VideoScreen(
                             modifier = Modifier.padding(16.dp)
                         ) {
                             Text(
-                                text = "🤔 **Ask Questions About Video**",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
+                                text = "🤔 Ask Questions About Video",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             Spacer(modifier = Modifier.height(8.dp))
@@ -216,7 +218,7 @@ fun VideoScreen(
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    if (uiState.isLoading) "Analyzing..." else "**Analyze Video**",
+                                    if (uiState.isLoading) "Analyzing..." else "Analyze Video",
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -346,12 +348,14 @@ fun VideoScreen(
                                         Card(
                                             modifier = Modifier.fillMaxWidth(),
                                             colors = CardDefaults.cardColors(
-                                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                                                containerColor = androidx.compose.ui.graphics.Color.White
                                             ),
-                                            shape = RoundedCornerShape(8.dp)
+                                            shape = RoundedCornerShape(12.dp),
+                                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
                                         ) {
                                             Column(
-                                                modifier = Modifier.padding(12.dp)
+                                                modifier = Modifier.padding(16.dp)
                                             ) {
                                                 Row(
                                                     modifier = Modifier.fillMaxWidth(),
@@ -365,11 +369,12 @@ fun VideoScreen(
                                                         color = MaterialTheme.colorScheme.primary
                                                     )
                                                 }
-                                                Spacer(modifier = Modifier.height(4.dp))
+                                                Spacer(modifier = Modifier.height(8.dp))
                                                 Text(
                                                     text = moment.description,
                                                     fontSize = 14.sp,
-                                                    color = MaterialTheme.colorScheme.onTertiaryContainer
+                                                    lineHeight = 20.sp,
+                                                    color = MaterialTheme.colorScheme.onSurface
                                                 )
                                             }
                                         }

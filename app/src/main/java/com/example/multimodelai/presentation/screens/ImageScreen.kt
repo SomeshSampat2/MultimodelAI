@@ -51,9 +51,10 @@ fun ImageScreen(
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
+                containerColor = androidx.compose.ui.graphics.Color.White
             ),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column(
                 modifier = Modifier.padding(20.dp)
@@ -62,14 +63,14 @@ fun ImageScreen(
                     text = "🖼️ Image Analysis",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "*Upload an image to analyze its content or get detailed labels*",
+                    text = "Upload an image to get labels or ask specific questions about its content",
                     fontSize = 16.sp,
                     fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )
             }
         }

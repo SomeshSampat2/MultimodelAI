@@ -3,6 +3,7 @@ package com.example.multimodelai.presentation.screens
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,9 +49,10 @@ fun DocumentScreen(
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
+                containerColor = androidx.compose.ui.graphics.Color.White
             ),
-            shape = RoundedCornerShape(16.dp)
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column(
                 modifier = Modifier.padding(20.dp)
@@ -59,14 +61,14 @@ fun DocumentScreen(
                     text = "📄 Document Analysis",
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Upload a document (PDF, DOCX, TXT) to analyze its content or get a comprehensive summary",
+                    text = "Upload a document to analyze its content or ask specific questions",
                     fontSize = 16.sp,
                     fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )
             }
         }
@@ -353,26 +355,26 @@ fun DocumentScreen(
                                         Card(
                                             modifier = Modifier.fillMaxWidth(),
                                             colors = CardDefaults.cardColors(
-                                                containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                                                containerColor = androidx.compose.ui.graphics.Color.White
                                             ),
-                                            shape = RoundedCornerShape(8.dp)
+                                            shape = RoundedCornerShape(12.dp),
+                                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
                                         ) {
                                             Row(
-                                                modifier = Modifier.padding(12.dp),
+                                                modifier = Modifier.padding(16.dp),
                                                 verticalAlignment = Alignment.Top
                                             ) {
                                                 Text(
-                                                    text = "•",
+                                                    text = "🔑",
                                                     fontSize = 16.sp,
-                                                    fontWeight = FontWeight.Bold,
-                                                    color = MaterialTheme.colorScheme.primary,
-                                                    modifier = Modifier.padding(end = 8.dp)
+                                                    modifier = Modifier.padding(end = 12.dp)
                                                 )
                                                 Text(
                                                     text = point,
                                                     fontSize = 14.sp,
                                                     lineHeight = 20.sp,
-                                                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                                                    color = MaterialTheme.colorScheme.onSurface,
                                                     modifier = Modifier.weight(1f)
                                                 )
                                             }
