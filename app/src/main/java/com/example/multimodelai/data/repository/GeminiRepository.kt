@@ -313,6 +313,96 @@ class GeminiRepository @Inject constructor(
             }
         }
     }
+
+    // Get video chapters
+    suspend fun getVideoChapters(
+        videoData: ByteArray,
+        mimeType: String
+    ): Result<VideoSummaryResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val base64Video = Base64.encodeToString(videoData, Base64.NO_WRAP)
+                val request = StructuredRequest(
+                    contents = listOf(
+                        Content(
+                            role = "user",
+                            parts = listOf(
+                                Part(text = "Analyze this video and break it down into logical chapters or sections. Provide chapter titles with timestamps and brief descriptions of what each chapter covers."),
+                                Part(inlineData = InlineData(mimeType = mimeType, data = base64Video))
+                            )
+                        )
+                    ),
+                    generationConfig = StructuredGenerationConfig(
+                        responseSchema = SchemaDefinitions.videoSummarySchema
+                    )
+                )
+                
+                val response = apiService.generateStructuredContent(
+                    apiKey = Constants.GEMINI_API_KEY,
+                    request = request
+                )
+                
+                if (response.isSuccessful) {
+                    val responseText = response.body()?.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
+                    if (responseText != null) {
+                        val chaptersResponse = gson.fromJson(responseText, VideoSummaryResponse::class.java)
+                        Result.success(chaptersResponse)
+                    } else {
+                        Result.failure(Exception("No response received"))
+                    }
+                } else {
+                    Result.failure(Exception("API Error: ${response.code()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(Exception("Failed to get video chapters: ${e.message}"))
+            }
+        }
+    }
+
+    // Get video highlights
+    suspend fun getVideoHighlights(
+        videoData: ByteArray,
+        mimeType: String
+    ): Result<VideoSummaryResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val base64Video = Base64.encodeToString(videoData, Base64.NO_WRAP)
+                val request = StructuredRequest(
+                    contents = listOf(
+                        Content(
+                            role = "user",
+                            parts = listOf(
+                                Part(text = "Identify the most exciting, important, and engaging highlights from this video. Focus on peak moments, key actions, emotional peaks, and the most memorable scenes with timestamps."),
+                                Part(inlineData = InlineData(mimeType = mimeType, data = base64Video))
+                            )
+                        )
+                    ),
+                    generationConfig = StructuredGenerationConfig(
+                        responseSchema = SchemaDefinitions.videoSummarySchema
+                    )
+                )
+                
+                val response = apiService.generateStructuredContent(
+                    apiKey = Constants.GEMINI_API_KEY,
+                    request = request
+                )
+                
+                if (response.isSuccessful) {
+                    val responseText = response.body()?.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
+                    if (responseText != null) {
+                        val highlightsResponse = gson.fromJson(responseText, VideoSummaryResponse::class.java)
+                        Result.success(highlightsResponse)
+                    } else {
+                        Result.failure(Exception("No response received"))
+                    }
+                } else {
+                    Result.failure(Exception("API Error: ${response.code()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(Exception("Failed to get video highlights: ${e.message}"))
+            }
+        }
+    }
     
     // Analyze audio with streaming
     suspend fun analyzeAudioStream(
